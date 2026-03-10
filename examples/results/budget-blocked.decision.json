@@ -1,0 +1,9 @@
+{
+  "decision": "block",
+  "reason": "Estimated cost exceeds the configured max estimated cost.",
+  "estimated_cost": 0.09,
+  "remaining_budget": 0.01,
+  "policy_refs": [
+    "max_estimated_cost"
+  ]
+}

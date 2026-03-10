@@ -1,0 +1,10 @@
+{
+  "decision": "allow",
+  "reason": "Budget window allows model execution.",
+  "estimated_cost": 0.01,
+  "remaining_budget": 0.08,
+  "policy_refs": [
+    "max_estimated_cost",
+    "review_threshold"
+  ]
+}
