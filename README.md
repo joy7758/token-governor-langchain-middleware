@@ -5,6 +5,12 @@ Budget-window middleware for LangChain agents running on LangGraph.
 Part of the Agent Runtime Safety Kit.  
 This repo shows a thin middleware pattern for budget-aware control before model execution.
 
+## Positioning
+
+This is a thin budget-window middleware example.
+It sits before model execution in a small runtime control chain.
+It is not a universal token reduction claim.
+
 ## What this is
 
 - A docs-first and minimal runnable adapter repo.
@@ -49,6 +55,7 @@ pytest
 - [Budget Blocked State](examples/states/budget-blocked.state.json)
 - [Budget OK Decision](examples/results/budget-ok.decision.json)
 - [Budget Blocked Decision](examples/results/budget-blocked.decision.json)
+- [Runtime Control Chain Overview](https://github.com/joy7758/token-governor/blob/main/docs/outreach/runtime-control-chain-overview.md)
 
 ## Middleware Shape
 
