@@ -1,75 +1,66 @@
-# Token Governor LangChain Middleware
+<!-- language-switch:start -->
+<p>
+  <a href="./README.md">
+    <img src="https://img.shields.io/badge/English-Current-1f883d?style=for-the-badge" alt="English">
+  </a>
+  <a href="./README.zh-CN.md">
+    <img src="https://img.shields.io/badge/Chinese-Switch-0f172a?style=for-the-badge" alt="Chinese">
+  </a>
+</p>
+<!-- language-switch:end -->
 
-Budget-window middleware for LangChain agents running on LangGraph.
+# token-governor-langchain-middleware
 
-Part of the Agent Runtime Safety Kit.  
-This repo shows a thin middleware pattern for budget-aware control before model execution.
+Thin adapter and integration surface for [token-governor](https://github.com/joy7758/token-governor).
 
-## Positioning
+## Role
 
-This is a thin budget-window middleware example.
-It sits before model execution in a small runtime control chain.
-It is not a universal token reduction claim.
+This repo shows a minimal LangChain or LangGraph middleware pattern that consumes canonical governance logic from the Token Governor ecosystem. It exists to package integration glue and runnable examples, not to redefine the governance layer.
 
-## What this is
+## Canonical home
 
-- A docs-first and minimal runnable adapter repo.
-- A small budget-window decision core that works on local JSON-like state.
-- A thin `before_model` middleware example for LangChain agents.
-- A composable control layer that can sit before model execution.
+The canonical governance implementation lives in `token-governor`, especially:
 
-## What this is not
+- `token-governor/adapters/langchain_middleware.py`
+- `token-governor/governor/`
+- `token-governor/docs/boundary.md`
 
-- Not a full agent framework.
-- Not a promise of universal token reduction.
-- Not an official LangChain or LangGraph extension.
-- Not a production-ready control plane by itself.
+## Not this repo
 
-## Quickstart
+- not the canonical governance runtime implementation
+- not the architecture hub
+- not the benchmark suite
+- not the audit or execution-integrity layer
+
+## Minimal usage
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install -U pip
 python -m pip install -e ".[test]"
+pytest
+```
 
-python - <<'PY'
+```python
 import json
 from pathlib import Path
+
 from token_governor_langchain_middleware.budget import evaluate_budget_window
 
 policy = json.loads(Path("examples/policies/budget-window.policy.json").read_text())
 state = json.loads(Path("examples/states/budget-ok.state.json").read_text())
 print(evaluate_budget_window(state, policy))
-PY
-
-pytest
 ```
 
-## Demo Assets
+For the canonical runtime, policy semantics, and CLI surface, start from `token-governor`.
 
-- [Demo](docs/demo.md)
-- [Integration Pattern](docs/integration-pattern.md)
-- [Budget Window Policy](examples/policies/budget-window.policy.json)
-- [Budget OK State](examples/states/budget-ok.state.json)
-- [Budget Blocked State](examples/states/budget-blocked.state.json)
-- [Budget OK Decision](examples/results/budget-ok.decision.json)
-- [Budget Blocked Decision](examples/results/budget-blocked.decision.json)
-- [Runtime Control Chain Overview](https://github.com/joy7758/token-governor/blob/main/docs/outreach/runtime-control-chain-overview.md)
+## Status
 
-## Middleware Shape
+- thin adapter
+- canonical home is `token-governor`
+- kept as a minimal LangChain integration example
 
-- `evaluate_budget_window(state, policy)` returns a small decision object with `allow`, `review`, or `block`.
-- `BudgetWindowMiddleware.before_model(...)` uses that decision before model execution.
-- `allow` returns `None` so the model call can continue.
-- `review` returns a small state update.
-- `block` returns a small state update plus `jump_to: "end"` to stop before the model call.
+## Notes
 
-This is a thin adapter example, not an official middleware extension.
-
-## Related Projects
-
-- [Token Governor](https://github.com/joy7758/token-governor)
-- [ARO Audit](https://github.com/joy7758/aro-audit)
-- [God Spear](https://github.com/joy7758/god-spear)
-- [God Spear MCP Gate](https://github.com/joy7758/god-spear-mcp-gate)
+- This repo intentionally keeps only adapter glue, examples, and tests.
+- Core governance logic should evolve in `token-governor` first.
